@@ -41,10 +41,61 @@ class Tree{
 			return;
 		};
 	}
-	
-
 	deleteItem(value){
-		console.log("jit");
+		let current = this.root
+		while(true){
+			if(value === current.data){
+				if(current === this.root){
+					this.root = null;
+				}
+				break;
+			}
+
+			if (value > current.data){
+				if(current.right.data === value){
+					break;
+				}
+				else{
+					current = current.right;
+				};
+			}
+			else{
+				if(current.left.data === value){
+					break;
+				}
+				else{
+					current = current.left;
+				};
+			}; 
+		};	
+		if(current.right){
+			if(value === current.right.data){
+				if(current.right.right === null){
+					current.right = current.right.left;
+					return;
+				}
+				else{
+					const targetLeftCopy = current.right.left;
+					current.right = current.right.right;
+					current.right.left = targetLeftCopy;
+					return;
+				};
+			};
+		};
+		if(current.left){
+			if(value === current.left.data){
+				if(current.left.right === null){
+					current.left = current.left.left;
+					return;
+				}
+				else{
+					const targetLeftCopy = current.left.left;
+					current.left = current.left.right;
+					current.left.left = targetLeftCopy;
+					return;
+				};
+			}
+		}
 	}
 }
 
@@ -81,8 +132,16 @@ console.log(tree.arr);
 
 tree.root = buildTree(tree.arr, 0, tree.arr.length - 1);
 
-tree.insert(1);
+prettyPrint(tree.root)
 
-prettyPrint(tree.root);
+
+console.log("running delete item");
+
+tree.deleteItem(7)
+tree.deleteItem(2);
+tree.deleteItem(4);
+tree.deleteItem(1);
+prettyPrint(tree.root)
+
 
 
