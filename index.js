@@ -101,8 +101,6 @@ class Tree{
 		if(current.data === value){
 			return current;
 		}
-
-
 		while(true){
 			if (value > current.data){
 				if(current.right.data === value){
@@ -220,7 +218,34 @@ class Tree{
 		const rightLength = longestPathToLeaf(node.right);
 		return( (leftLength > rightLength)? leftLength:rightLength);
 	}
-
+	depth(value){
+		let current = this.root
+		if(current.data === value){
+			return current;
+		}
+		let depth = 0;
+		while(true){
+			if (value > current.data){
+				if(current.right.data === value){
+					break;
+				}
+				else{
+					current = current.right;
+					depth += 1;
+				};
+			}
+			else{
+				if(current.left.data === value){
+					break;
+				}
+				else{
+					current = current.left;
+					depth += 1;
+				};
+			}; 
+		};	
+		return depth + 1;
+	}
 }
 
 function buildTree(arr, start, end){	
@@ -261,7 +286,8 @@ prettyPrint(tree.root)
 
 console.log("running delete item");
 
-console.log(tree.height(10));
+console.log(tree.depth(7));
+
 
 
 
