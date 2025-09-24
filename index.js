@@ -97,6 +97,33 @@ class Tree{
 			}
 		}
 	}
+	find(value){
+		let current = this.root
+		while(true){
+			if (value > current.data){
+				if(current.right.data === value){
+					break;
+				}
+				else{
+					current = current.right;
+				};
+			}
+			else{
+				if(current.left.data === value){
+					break;
+				}
+				else{
+					current = current.left;
+				};
+			}; 
+		};	
+		if(current.right.data === value){
+			return current.right;
+		}
+		else{
+			return current.left;
+		}
+	};
 }
 
 function buildTree(arr, start, end){	
@@ -137,11 +164,8 @@ prettyPrint(tree.root)
 
 console.log("running delete item");
 
-tree.deleteItem(7)
-tree.deleteItem(2);
-tree.deleteItem(4);
-tree.deleteItem(1);
 prettyPrint(tree.root)
+
 
 
 
