@@ -125,6 +125,9 @@ class Tree{
 		}
 	}
 	levelOrderForEach(callback){
+		if(!callback){
+			throw new Error("callback function is undefined");
+		}
 		const queue = [];
 		if(this.root){
 			queue.push(this.root)
@@ -139,7 +142,29 @@ class Tree{
 			}
 			queue.shift();
 		}
-	};
+	}
+	recursiveLevelOrderForEach(callback, queue=[this.root]){
+		function rec(callback, queue){
+			if(queue.length <= 0){
+				return
+			}
+			else{
+				if(queue[0]){
+					callback(queue[0]);
+				}
+				if(queue[0].left){
+					queue.push(queue[0].left);
+				}
+				if(queue[0].right){
+					queue.push(queue[0].right);
+				}
+				queue.shift();		
+				rec(callback, queue)
+			}
+		}
+		rec(callback, queue);
+	}
+
 }
 
 function buildTree(arr, start, end){	
@@ -180,7 +205,8 @@ prettyPrint(tree.root)
 
 console.log("running delete item");
 
-prettyPrint(tree.root)
+
+tree.recursiveLevelOrderForEach(node => console.log(node.data));
 
 
 
