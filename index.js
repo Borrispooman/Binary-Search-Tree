@@ -19,8 +19,7 @@ class Tree{
 					break;
 				}
 				else{
-					current = current.right;
-				};
+					current = current.right; };
 			}
 			else{
 				if(current.left === null){
@@ -99,6 +98,11 @@ class Tree{
 	}
 	find(value){
 		let current = this.root
+		if(current.data === value){
+			return current;
+		}
+
+
 		while(true){
 			if (value > current.data){
 				if(current.right.data === value){
@@ -163,6 +167,58 @@ class Tree{
 			}
 		}
 		rec(callback, queue);
+	};
+	preOrderForEach(callback){
+		function rec(callback, node){
+			callback(node);
+			if(node.left){
+				rec(callback, node.left);
+			}
+			if(node.right){
+				rec(callback, node.right)
+			}
+		}
+		rec(callback, this.root);
+	}
+	inOrderForEach(callback){
+		function rec(callback, node){
+			if(node.left){
+				rec(callback, node.left);
+			}
+			callback(node);
+			if(node.right){
+				rec(callback, node.right)
+			}
+		}
+		rec(callback, this.root);
+	}
+	postOrderForEach(callback){
+		function rec(callback, node){
+			if(node.left){
+				rec(callback, node.left);
+			}
+			if(node.right){
+				rec(callback, node.right)
+			}
+			callback(node);
+		}
+		rec(callback, this.root);
+	}
+	height(value){
+		const node = this.find(value);
+		function longestPathToLeaf(node){
+			if(!node){
+				return 0;
+			}
+			else{
+				const leftLength = 1 + longestPathToLeaf(node.left)
+				const rightLength = 1 + longestPathToLeaf(node.right)
+				return( (leftLength > rightLength)? leftLength:rightLength);
+			};
+		}
+		const leftLength = longestPathToLeaf(node.left);
+		const rightLength = longestPathToLeaf(node.right);
+		return( (leftLength > rightLength)? leftLength:rightLength);
 	}
 
 }
@@ -194,7 +250,7 @@ const prettyPrint = (node, prefix = '', isLeft = true) => {
 };
 
 
-const tree = new Tree([1,2,3,4,5,6,7,8,9]);
+const tree = new Tree([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]);
 
 console.log(tree.arr);
 
@@ -205,8 +261,7 @@ prettyPrint(tree.root)
 
 console.log("running delete item");
 
-
-tree.recursiveLevelOrderForEach(node => console.log(node.data));
+console.log(tree.height(10));
 
 
 
