@@ -123,6 +123,22 @@ class Tree{
 		else{
 			return current.left;
 		}
+	}
+	levelOrderForEach(callback){
+		const queue = [];
+		if(this.root){
+			queue.push(this.root)
+		}
+		while(queue.length > 0){
+			callback(queue[0]);	
+			if(queue[0].left !== null){
+				queue.push(queue[0].left);
+			}
+			if(queue[0].right !== null){
+				queue.push(queue[0].right);
+			}
+			queue.shift();
+		}
 	};
 }
 
@@ -165,7 +181,6 @@ prettyPrint(tree.root)
 console.log("running delete item");
 
 prettyPrint(tree.root)
-
 
 
 
