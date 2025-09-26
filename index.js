@@ -246,6 +246,29 @@ class Tree{
 		};	
 		return depth + 1;
 	}
+	isBalanced(){
+		const checkBalanceRec = (node) => {
+			if(!node || !node.left || !node.right){
+				return true;
+			}
+			const leftHeight = this.height(node.left.data);
+			const rightHeight = this.height(node.right.data);
+			const heightDif = Math.abs(leftHeight - rightHeight);
+			if(heightDif <= 1 && checkBalanceRec(node.left) && checkBalanceRec(node.right)){
+				return true;
+			}
+			else{
+				return false;
+			}
+		}
+		return checkBalanceRec(this.root);
+	}
+	rebalance(){
+		const arr = []
+		this.inOrderForEach((node) => arr.push(node.data));
+		this.root = buildTree(arr, 0, arr.length -1);
+	}
+
 }
 
 function buildTree(arr, start, end){	
@@ -275,19 +298,24 @@ const prettyPrint = (node, prefix = '', isLeft = true) => {
 };
 
 
-const tree = new Tree([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]);
-
-console.log(tree.arr);
-
+const tree = new Tree([1,2,3,4,5,6,7,8,9]);
 tree.root = buildTree(tree.arr, 0, tree.arr.length - 1);
+
+tree.insert(10)
+tree.insert(11)
+tree.insert(12)
+tree.insert(13)
+tree.insert(14)
 
 prettyPrint(tree.root)
 
+console.log(tree.isBalanced());
 
-console.log("running delete item");
+tree.rebalance();
 
-console.log(tree.depth(7));
+prettyPrint(tree.root);
 
+console.log(tree.isBalanced());
 
 
 
