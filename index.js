@@ -298,24 +298,3 @@ const prettyPrint = (node, prefix = '', isLeft = true) => {
 };
 
 
-const tree = new Tree([1,2,3,4,5,6,7,8,9]);
-tree.root = buildTree(tree.arr, 0, tree.arr.length - 1);
-
-tree.insert(10)
-tree.insert(11)
-tree.insert(12)
-tree.insert(13)
-tree.insert(14)
-
-prettyPrint(tree.root)
-
-console.log(tree.isBalanced());
-
-tree.rebalance();
-
-prettyPrint(tree.root);
-
-console.log(tree.isBalanced());
-
-
-
